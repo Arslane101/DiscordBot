@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 
 import discord
 from discord.utils import snowflake_time
@@ -52,6 +53,11 @@ async def onBreak(ctx: discord.ApplicationContext, temp_time):
     await ctx.respond(f"{ctx.author} is on a break ! ")
 
 
-with open("credentials.json", "r") as file:
-    token = json.load(file)["discord_token"]
+if os.path.exists("credentials.json"):
+    with open("credentials.json") as f:
+        creds = json.load(f)
+        token = creds.get("discord_token")
+else:
+    token = os.getenv("DISCORD_TOKEN")
+
 bot.run(token)
