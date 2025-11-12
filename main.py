@@ -68,8 +68,9 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return "Bot is running!"
-    # Run Flask in a separate thread
-    threading.Thread(target=lambda: app.run(host="0.0.0.0", port=8080)).start()
+
+
+threading.Thread(target=lambda: app.run(host="0.0.0.0", port=8080)).start()
 
 
 bot.run(token)
