@@ -11,11 +11,12 @@ USER 10001
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-COPY . /app
+COPY . .
 
 WORKDIR /app
 
+EXPOSE 8080
 CMD ["python", "main.py"]
