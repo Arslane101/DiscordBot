@@ -2,6 +2,7 @@ import datetime
 import json
 import os
 import threading
+import time
 
 import discord
 from discord.utils import snowflake_time
@@ -70,7 +71,8 @@ def home():
     return "Bot is running!"
 
 
-threading.Thread(target=lambda: app.run(host="0.0.0.0", port=8080)).start()
+time.sleep(15)
+threading.Thread(daemon=True, target=lambda: app.run(host="0.0.0.0", port=8080)).start()
 
 
 bot.run(token)
