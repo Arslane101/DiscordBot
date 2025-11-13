@@ -18,7 +18,6 @@ class CheckinCheckout(discord.Bot):
 
 
 bot = CheckinCheckout()
-temp_time = 0
 
 
 @bot.event
