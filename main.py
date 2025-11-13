@@ -14,6 +14,7 @@ class CheckinCheckout(discord.Bot):
         super().__init__(description, *args, **options)
         self.checkin_time: datetime.datetime
         self.checkout_time: datetime.datetime
+        self.total: datetime.datetime
 
 
 bot = CheckinCheckout()
@@ -39,19 +40,19 @@ async def checkin(ctx: discord.ApplicationContext):
 
 
 @bot.slash_command(name="checkout", description="Check-out")
-async def checkout(ctx: discord.ApplicationContext, temp_time):
+async def checkout(ctx: discord.ApplicationContext):
     final_time = snowflake_time(ctx.interaction.id)
     if bot.checkin_time is not None:
-        bot.checkout_time = temp_time + (final_time - bot.checkin_time)
+        bot.checkout_time = bot.total + (final_time - bot.checkin_time)
     else:
-        bot.checkout_time = temp_time
+        bot.checkout_time = bot.total
     await ctx.respond(f"{ctx.author} has checked out \n Time Worked {bot.checkin_time}")
 
 
 @bot.slash_command(name="break", description="Break")
-async def onBreak(ctx: discord.ApplicationContext, temp_time):
+async def onBreak(ctx: discord.ApplicationContext):
     trigger_time = snowflake_time(ctx.interaction.id)
-    temp_time = temp_time + (trigger_time - bot.checkin_time)
+    bot.total = bot.total + (trigger_time - bot.checkin_time)
 
     await ctx.respond(f"{ctx.author} is on a break ! ")
 
